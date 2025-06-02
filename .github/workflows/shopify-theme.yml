@@ -1,0 +1,71 @@
+name: Shopify Theme CI
+
+on:
+  pull_request:
+    branches: [ "**" ]
+  push:
+    branches: [ main ]
+
+env:
+  STORE: ${{ secrets.SHOPIFY_STORE }}
+  TOKEN: ${{ secrets.SHOPIFY_THEME_TOKEN }}
+  THEME_NAME: ${{ secrets.THEME_NAME }}
+
+jobs:
+  test:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+        working-directory: xbox360-theme
+      - run: npm i -g @shopify/cli
+      - run: shopify theme check
+        working-directory: xbox360-theme
+      - run: npm run lint
+        working-directory: xbox360-theme
+      - run: npm run build
+        working-directory: xbox360-theme
+      - name: Verify built assets
+        run: |
+          test -f xbox360-theme/assets/application.css || exit 1
+          echo "✅ Required assets verified"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: theme-build
+          path: xbox360-theme
+
+  deploy:
+    if: github.ref != 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: theme-build
+      - run: npm i -g @shopify/cli
+      - run: |
+          shopify config set --access-token="$TOKEN" --store="$STORE"
+          shopify theme push \
+            --unpublished \
+            --theme-name "$THEME_NAME-${{ github.head_ref || github.sha }}" \
+            --path xbox360-theme
+
+  promote:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: theme-build
+      - run: npm i -g @shopify/cli
+      - run: |
+          shopify config set --access-token="$TOKEN" --store="$STORE"
+          shopify theme push --live --path xbox360-theme 

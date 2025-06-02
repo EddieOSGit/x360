@@ -1,0 +1,12 @@
+node_modules/
+*.min.js
+*.min.css
+assets/vendor/
+assets/gsap.min.js
+assets/application.css
+config/
+locales/
+templates/
+sections/
+snippets/
+layout/ 
