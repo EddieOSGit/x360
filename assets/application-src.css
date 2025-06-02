@@ -9,4 +9,81 @@
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
+  body {
+    @apply bg-xbox-dark text-white;
+  }
+}
+
+@layer components {
+  /* Blade shell gradient background */
+  .x360-blade-shell {
+    @apply bg-blade-gradient;
+  }
+
+  /* Channel styling */
+  .x360-channel {
+    @apply my-8 relative;
+  }
+  .x360-channel__title {
+    @apply font-xbox text-2xl text-white font-bold px-4 mb-2;
+  }
+  .x360-channel.is-active .x360-channel__title {
+    @apply bg-blade-gradient text-white p-2 rounded-r-full;
+  }
+
+  /* Navigation arrows */
+  .x360-nav-arrow {
+    @apply text-white bg-xbox-dark bg-opacity-75 p-2 rounded-full hover:bg-opacity-100;
+  }
+  .x360-channel__nav {
+    @apply absolute top-1/2 transform -translate-y-1/2;
+  }
+  .x360-channel__nav--prev {
+    @apply left-0;
+  }
+  .x360-channel__nav--next {
+    @apply right-0;
+  }
+
+  /* Tiles container */
+  .x360-channel__tiles {
+    @apply flex gap-4 overflow-x-auto scroll-pl-4 scrollbar-hide;
+  }
+
+  /* Individual tile styling */
+  .x360-tile {
+    @apply relative group w-48 flex-shrink-0 bg-xbox-dark text-white rounded-lg overflow-hidden shadow-lg;
+    animation: bladeSlide 0.5s ease-out;
+  }
+  .x360-tile__img {
+    @apply w-full h-40 object-cover;
+  }
+  .x360-tile__placeholder {
+    @apply w-full h-40 flex items-center justify-center;
+  }
+  .x360-tile__overlay {
+    @apply absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100;
+  }
+  .x360-tile__content {
+    @apply absolute bottom-0 left-0 p-4;
+  }
+  .x360-tile__label {
+    @apply font-xbox text-lg;
+  }
+  .x360-tile__description {
+    @apply text-xs text-xbox-sub-green font-semibold;
+  }
+
+  .x360-tile:hover {
+    animation: tileHover 0.2s ease-out forwards;
+  }
+}
+
+/* Hide scrollbars for x360 channel container */
+.x360-channel__tiles {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.x360-channel__tiles::-webkit-scrollbar {
+  display: none; /* WebKit browsers */
 } 
