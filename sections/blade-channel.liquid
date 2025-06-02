@@ -1,0 +1,240 @@
+{%- liquid
+  assign channel_id = section.id | append: '-channel'
+  assign is_active = section.settings.is_active
+  assign data_source = section.settings.data_source
+  assign collection_handle = section.settings.collection
+  assign max_items = section.settings.max_items | default: 10
+-%}
+
+<div class="x360-channel{% if is_active %} is-active{% endif %}" 
+     id="{{ channel_id }}" 
+     role="region" 
+     aria-label="{{ section.settings.title }}">
+  
+  <h2 class="x360-channel__title">{{ section.settings.title }}</h2>
+  
+  <div class="x360-channel__nav x360-channel__nav--prev">
+    <button class="x360-nav-arrow" 
+            aria-label="Previous items" 
+            onclick="scrollChannel('{{ channel_id }}', -1)">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M10 12L6 8l4-4v8z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="x360-channel__nav x360-channel__nav--next">
+    <button class="x360-nav-arrow" 
+            aria-label="Next items" 
+            onclick="scrollChannel('{{ channel_id }}', 1)">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M6 4l4 4-4 4V4z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="x360-channel__tiles"
+       role="list"
+       aria-label="{{ section.settings.title }} items">
+    
+    {%- case data_source -%}
+      {%- when 'collection' -%}
+        {%- if collections[collection_handle] -%}
+          {%- for product in collections[collection_handle].products limit: max_items -%}
+            {% render 'tile-product', product: product %}
+          {%- endfor -%}
+        {%- endif -%}
+        
+      {%- when 'all_collections' -%}
+        {%- for collection in collections limit: max_items -%}
+          {% render 'tile-collection', collection: collection %}
+        {%- endfor -%}
+        
+      {%- when 'blog' -%}
+        {%- assign blog_handle = section.settings.blog -%}
+        {%- if blogs[blog_handle] -%}
+          {%- for article in blogs[blog_handle].articles limit: max_items -%}
+            {% render 'tile-article', article: article %}
+          {%- endfor -%}
+        {%- endif -%}
+        
+      {%- when 'pages' -%}
+        {%- assign page_handles = section.settings.pages | split: ',' -%}
+        {%- for page_handle in page_handles limit: max_items -%}
+          {%- assign page = pages[page_handle] -%}
+          {%- if page -%}
+            {% render 'tile-page', page: page %}
+          {%- endif -%}
+        {%- endfor -%}
+        
+      {%- when 'custom' -%}
+        {%- for block in section.blocks limit: max_items -%}
+          {% render 'tile-custom', block: block %}
+        {%- endfor -%}
+        
+    {%- endcase -%}
+  </div>
+</div>
+
+<script>
+  function scrollChannel(channelId, direction) {
+    const channel = document.getElementById(channelId);
+    const tilesContainer = channel.querySelector('.x360-channel__tiles');
+    const tileWidth = tilesContainer.querySelector('.x360-tile').offsetWidth + 8; // tile width + gap
+    const scrollAmount = tileWidth * 3; // scroll 3 tiles at a time
+    
+    tilesContainer.scrollBy({
+      left: direction * scrollAmount,
+      behavior: document.querySelector('html').classList.contains('reduced-motion') ? 'auto' : 'smooth'
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check for reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelector('html').classList.add('reduced-motion');
+    }
+    
+    // Show/hide navigation arrows based on scroll width
+    const channels = document.querySelectorAll('.x360-channel');
+    channels.forEach(channel => {
+      const tilesContainer = channel.querySelector('.x360-channel__tiles');
+      const prevNav = channel.querySelector('.x360-channel__nav--prev');
+      const nextNav = channel.querySelector('.x360-channel__nav--next');
+      
+      // Initially hide prev button and check if next should be visible
+      prevNav.classList.add('hidden');
+      if (tilesContainer.scrollWidth <= tilesContainer.clientWidth) {
+        nextNav.classList.add('hidden');
+      }
+      
+      // Add scroll event listener to show/hide navigation
+      tilesContainer.addEventListener('scroll', function() {
+        if (tilesContainer.scrollLeft > 0) {
+          prevNav.classList.remove('hidden');
+        } else {
+          prevNav.classList.add('hidden');
+        }
+        
+        if (tilesContainer.scrollLeft + tilesContainer.clientWidth >= tilesContainer.scrollWidth - 10) {
+          nextNav.classList.add('hidden');
+        } else {
+          nextNav.classList.remove('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Xbox 360 Channel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Channel Title",
+      "default": "Featured"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_active",
+      "label": "Active Channel",
+      "info": "Active channels have the green blade gradient background",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "data_source",
+      "label": "Data Source",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection Products"
+        },
+        {
+          "value": "all_collections",
+          "label": "All Collections"
+        },
+        {
+          "value": "blog",
+          "label": "Blog Articles"
+        },
+        {
+          "value": "pages",
+          "label": "Pages"
+        },
+        {
+          "value": "custom",
+          "label": "Custom Tiles"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select collection when using 'Collection Products' data source"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Select blog when using 'Blog Articles' data source"
+    },
+    {
+      "type": "text",
+      "id": "pages",
+      "label": "Page Handles",
+      "info": "Comma-separated list of page handles (e.g., about-us,contact,shipping)",
+      "placeholder": "about-us,contact,shipping"
+    },
+    {
+      "type": "range",
+      "id": "max_items",
+      "label": "Maximum Items",
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_tile",
+      "name": "Custom Tile",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tile Title",
+          "default": "Custom Tile"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Tile Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Xbox 360 Channel"
+    }
+  ]
+}
+{% endschema %} 

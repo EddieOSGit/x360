@@ -1,0 +1,168 @@
+{
+  "sections": {
+    "home_channel": {
+      "type": "blade-channel",
+      "settings": {
+        "title": "Home",
+        "is_active": true,
+        "data_source": "custom",
+        "max_items": 8
+      },
+      "blocks": {
+        "home_tile_1": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Welcome",
+            "link": "/",
+            "description": "Start here"
+          }
+        },
+        "home_tile_2": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "New Arrivals",
+            "link": "/collections/new-arrivals",
+            "description": "Latest products"
+          }
+        },
+        "home_tile_3": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Best Sellers",
+            "link": "/collections/best-sellers",
+            "description": "Popular items"
+          }
+        },
+        "home_tile_4": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Sale",
+            "link": "/collections/sale",
+            "description": "Special offers"
+          }
+        }
+      },
+      "block_order": [
+        "home_tile_1",
+        "home_tile_2",
+        "home_tile_3",
+        "home_tile_4"
+      ]
+    },
+    "store_channel": {
+      "type": "blade-channel",
+      "settings": {
+        "title": "Store",
+        "is_active": false,
+        "data_source": "all_collections",
+        "max_items": 10
+      }
+    },
+    "featured_products_channel": {
+      "type": "blade-channel",
+      "settings": {
+        "title": "Featured Products",
+        "is_active": false,
+        "data_source": "collection",
+        "collection": "all",
+        "max_items": 12
+      }
+    },
+    "social_channel": {
+      "type": "blade-channel",
+      "settings": {
+        "title": "Social",
+        "is_active": false,
+        "data_source": "custom",
+        "max_items": 6
+      },
+      "blocks": {
+        "social_tile_1": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "About Us",
+            "link": "/pages/about",
+            "description": "Our story"
+          }
+        },
+        "social_tile_2": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Contact",
+            "link": "/pages/contact",
+            "description": "Get in touch"
+          }
+        },
+        "social_tile_3": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Blog",
+            "link": "/blogs/news",
+            "description": "Latest news"
+          }
+        }
+      },
+      "block_order": [
+        "social_tile_1",
+        "social_tile_2",
+        "social_tile_3"
+      ]
+    },
+    "settings_channel": {
+      "type": "blade-channel",
+      "settings": {
+        "title": "Settings",
+        "is_active": false,
+        "data_source": "custom",
+        "max_items": 6
+      },
+      "blocks": {
+        "settings_tile_1": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "My Account",
+            "link": "/account",
+            "description": "Profile & orders"
+          }
+        },
+        "settings_tile_2": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Cart",
+            "link": "/cart",
+            "description": "Shopping cart"
+          }
+        },
+        "settings_tile_3": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Search",
+            "link": "/search",
+            "description": "Find products"
+          }
+        },
+        "settings_tile_4": {
+          "type": "custom_tile",
+          "settings": {
+            "title": "Help",
+            "link": "/pages/help",
+            "description": "Support center"
+          }
+        }
+      },
+      "block_order": [
+        "settings_tile_1",
+        "settings_tile_2",
+        "settings_tile_3",
+        "settings_tile_4"
+      ]
+    }
+  },
+  "order": [
+    "home_channel",
+    "store_channel",
+    "featured_products_channel",
+    "social_channel",
+    "settings_channel"
+  ]
+}

@@ -1,0 +1,39 @@
+{%- liquid
+  assign product_url = product.url
+  assign product_title = product.title
+  assign product_image = product.featured_media.preview_image
+  assign product_price = product.price | money
+-%}
+
+<div class="x360-tile group" role="link" aria-label="{{ product_title }} - {{ product_price }}" data-tile-type="product" data-product-id="{{ product.id }}">
+  <a href="{{ product_url }}" class="x360-tile__link">
+    
+    {%- if product_image -%}
+      <img src="{{ product_image | image_url: width: 200 }}" 
+           alt="{{ product_title | escape }} product image"
+           class="x360-tile__img"
+           loading="lazy"
+           width="200"
+           height="200">
+    {%- else -%}
+      <div class="x360-tile__placeholder">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" class="text-gray-400">
+          <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+        </svg>
+      </div>
+    {%- endif -%}
+    
+    <div class="x360-tile__overlay">
+      <div class="x360-tile__content">
+        <h3 class="x360-tile__label">{{ product_title | truncate: 20 }}</h3>
+        <p class="x360-tile__price text-xs text-xbox-sub-green font-bold">{{ product_price }}</p>
+      </div>
+      <span class="x360-a-button absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#107C10" stroke="#fff" stroke-width="2"/>
+          <text x="16" y="22" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#fff" font-weight="bold">A</text>
+        </svg>
+      </span>
+    </div>
+  </a>
+</div> 

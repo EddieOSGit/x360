@@ -1,0 +1,28 @@
+{%- liquid
+  assign page_url = page.url
+  assign page_title = page.title
+-%}
+
+<div class="x360-tile" role="link" aria-label="{{ page_title }}" data-tile-type="page" data-page-id="{{ page.id }}">
+  <a href="{{ page_url }}" class="x360-tile__link">
+    
+    <div class="x360-tile__placeholder bg-gradient-to-br from-xbox-blade-start to-xbox-blade-end">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" class="text-white">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+      </svg>
+    </div>
+    
+    <div class="x360-tile__overlay">
+      <div class="x360-tile__content">
+        <h3 class="x360-tile__label">{{ page_title | truncate: 20 }}</h3>
+        <p class="x360-tile__type text-xs text-xbox-sub-green font-bold">Page</p>
+      </div>
+      <span class="x360-a-button absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#107C10" stroke="#fff" stroke-width="2"/>
+          <text x="16" y="22" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#fff" font-weight="bold">A</text>
+        </svg>
+      </span>
+    </div>
+  </a>
+</div> 

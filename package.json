@@ -1,0 +1,33 @@
+{
+  "name": "xbox360-theme",
+  "version": "1.0.0",
+  "description": "Xbox 360 Dashboard inspired Shopify theme",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./assets/application-src.css -o ./assets/application.css --watch",
+    "build": "tailwindcss -i ./assets/application-src.css -o ./assets/application.css --minify",
+    "dev": "shopify theme dev",
+    "lint": "eslint .",
+    "theme:check": "shopify theme check"
+  },
+  "keywords": [
+    "shopify",
+    "theme",
+    "xbox360",
+    "dashboard"
+  ],
+  "author": "Xbox 360 Theme Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.28.0",
+    "gsap": "^3.12.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run lint"
+    }
+  }
+}

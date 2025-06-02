@@ -1,0 +1,45 @@
+{%- liquid
+  assign tile_title = block.settings.title
+  assign tile_image = block.settings.image
+  assign tile_link = block.settings.link
+  assign tile_description = block.settings.description
+-%}
+
+<div class="x360-tile" role="link" aria-label="{{ tile_title }}" data-tile-type="custom" data-custom-id="{{ block.id }}">
+  {%- if tile_link != blank -%}
+    <a href="{{ tile_link }}" class="x360-tile__link">
+  {%- endif -%}
+    
+    {%- if tile_image -%}
+      <img src="{{ tile_image | image_url: width: 200 }}" 
+           alt="{{ tile_image.alt | escape }}"
+           class="x360-tile__img"
+           loading="lazy"
+           width="200"
+           height="200">
+    {%- else -%}
+      <div class="x360-tile__placeholder bg-gradient-to-br from-xbox-blade-start to-xbox-blade-end">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" class="text-white">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+    {%- endif -%}
+    
+    <div class="x360-tile__overlay">
+      <div class="x360-tile__content">
+        <h3 class="x360-tile__label">{{ tile_title | truncate: 20 }}</h3>
+        {%- if tile_description != blank -%}
+          <p class="x360-tile__description text-xs text-xbox-sub-green font-bold">{{ tile_description | truncate: 30 }}</p>
+        {%- endif -%}
+      </div>
+      <span class="x360-a-button absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#107C10" stroke="#fff" stroke-width="2"/>
+          <text x="16" y="22" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#fff" font-weight="bold">A</text>
+        </svg>
+      </span>
+    </div>
+  {%- if tile_link != blank -%}
+    </a>
+  {%- endif -%}
+</div> 
