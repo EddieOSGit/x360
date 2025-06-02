@@ -11,7 +11,7 @@
      role="region" 
      aria-label="{{ section.settings.title }}">
   
-  <h2 class="n64-channel__title">{{ section.settings.title }}</h2>
+  <h2 class="n64-channel__title n64-logo">{{ section.settings.title }}</h2>
   
   <div class="n64-channel__nav n64-channel__nav--prev">
     <button class="n64-nav-arrow" 
@@ -83,6 +83,23 @@
     const tileWidth = tilesContainer.querySelector('.n64-tile').offsetWidth + 8; // tile width + gap
     const scrollAmount = tileWidth * 3; // scroll 3 tiles at a time
     
+    // Add N64-style sound effect on navigation
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(direction > 0 ? 440 : 330, audioContext.currentTime);
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+    
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.2);
+    
+    // Scroll the tiles with animation
     tilesContainer.scrollBy({
       left: direction * scrollAmount,
       behavior: document.querySelector('html').classList.contains('reduced-motion') ? 'auto' : 'smooth'

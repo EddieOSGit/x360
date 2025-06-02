@@ -6,6 +6,10 @@
 -%}
 
 <div class="n64-tile group" role="link" aria-label="{{ tile_title }}" data-tile-type="custom" data-custom-id="{{ block.id }}">
+  {%- if forloop.first -%}
+    <div class="n64-selection-indicator"></div>
+  {%- endif -%}
+  
   {%- if tile_link != blank -%}
     <a href="{{ tile_link }}" class="n64-tile__link">
   {%- endif -%}

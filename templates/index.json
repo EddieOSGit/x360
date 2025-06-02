@@ -1,7 +1,7 @@
 {
   "sections": {
     "home_channel": {
-      "type": "blade-channel",
+      "type": "n64-channel",
       "settings": {
         "title": "Home",
         "is_active": true,
@@ -50,7 +50,7 @@
       ]
     },
     "store_channel": {
-      "type": "blade-channel",
+      "type": "n64-channel",
       "settings": {
         "title": "Store",
         "is_active": false,
@@ -59,7 +59,7 @@
       }
     },
     "featured_products_channel": {
-      "type": "blade-channel",
+      "type": "n64-channel",
       "settings": {
         "title": "Featured Products",
         "is_active": false,
@@ -69,7 +69,7 @@
       }
     },
     "social_channel": {
-      "type": "blade-channel",
+      "type": "n64-channel",
       "settings": {
         "title": "Social",
         "is_active": false,
@@ -109,7 +109,7 @@
       ]
     },
     "settings_channel": {
-      "type": "blade-channel",
+      "type": "n64-channel",
       "settings": {
         "title": "Settings",
         "is_active": false,
