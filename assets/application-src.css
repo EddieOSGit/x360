@@ -77,6 +77,24 @@
   .x360-tile:hover {
     animation: tileHover 0.2s ease-out forwards;
   }
+
+  /* Blade underline for header navigation */
+  .header__menu-item {
+    @apply font-xbox text-white px-4 py-2 relative group;
+  }
+  .header__menu-item:hover,
+  .header__menu-item:focus {
+    @apply text-xbox-sub-green;
+  }
+  .header__menu-item::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-1 bg-blade-gradient w-0 transition-width duration-200;
+  }
+  .header__menu-item:hover::after,
+  .header__menu-item:focus::after,
+  .header__menu-item[aria-current="page"]::after {
+    @apply w-full;
+  }
 }
 
 /* Hide scrollbars for x360 channel container */
