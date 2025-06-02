@@ -1,27 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./layout/*.liquid",
-    "./templates/*.liquid",
-    "./templates/**/*.json",
-    "./sections/*.liquid",
-    "./snippets/*.liquid",
-    "./assets/*.js"
+    './layout/*.liquid',
+    './templates/*.liquid',
+    './templates/**/*.json',
+    './sections/*.liquid',
+    './snippets/*.liquid',
+    './assets/*.js'
   ],
   theme: {
     extend: {
       colors: {
-        'xbox-green': '#107C10',
-        'xbox-sub-green': '#33A10E',
-        'xbox-dark': '#0F0F0F',
-        'xbox-blade-start': '#066501',
-        'xbox-blade-end': '#0DA90D'
+        'n64-purple': '#6E00FF',
+        'n64-gold': '#FFDF00',
+        'n64-dark': '#1E1E1E',
+        'n64-blade-start': '#6E00FF',
+        'n64-blade-end': '#FFDF00'
       },
       backgroundImage: {
-        'blade-gradient': 'linear-gradient(135deg, #066501 0%, #0DA90D 100%)'
+        'n64-gradient': 'linear-gradient(135deg, #6E00FF 0%, #FFDF00 100%)'
       },
       fontFamily: {
-        'xbox': ['Segoe UI', 'system-ui', 'sans-serif']
+        'n64': ['Press Start 2P', 'system-ui', 'sans-serif']
       },
       animation: {
         'blade-slide': 'bladeSlide 0.5s cubic-bezier(0.19, 1, 0.22, 1)',
@@ -47,4 +47,4 @@ module.exports = {
     },
   },
   plugins: [],
-} 
+}; 

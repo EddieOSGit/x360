@@ -6,15 +6,15 @@
   assign max_items = section.settings.max_items | default: 10
 -%}
 
-<div class="x360-channel{% if is_active %} is-active{% endif %}" 
+<div class="n64-channel{% if is_active %} is-active{% endif %}" 
      id="{{ channel_id }}" 
      role="region" 
      aria-label="{{ section.settings.title }}">
   
-  <h2 class="x360-channel__title">{{ section.settings.title }}</h2>
+  <h2 class="n64-channel__title">{{ section.settings.title }}</h2>
   
-  <div class="x360-channel__nav x360-channel__nav--prev">
-    <button class="x360-nav-arrow" 
+  <div class="n64-channel__nav n64-channel__nav--prev">
+    <button class="n64-nav-arrow" 
             aria-label="Previous items" 
             onclick="scrollChannel('{{ channel_id }}', -1)">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -23,8 +23,8 @@
     </button>
   </div>
   
-  <div class="x360-channel__nav x360-channel__nav--next">
-    <button class="x360-nav-arrow" 
+  <div class="n64-channel__nav n64-channel__nav--next">
+    <button class="n64-nav-arrow" 
             aria-label="Next items" 
             onclick="scrollChannel('{{ channel_id }}', 1)">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -33,7 +33,7 @@
     </button>
   </div>
   
-  <div class="x360-channel__tiles"
+  <div class="n64-channel__tiles"
        role="list"
        aria-label="{{ section.settings.title }} items">
     
@@ -79,8 +79,8 @@
 <script>
   function scrollChannel(channelId, direction) {
     const channel = document.getElementById(channelId);
-    const tilesContainer = channel.querySelector('.x360-channel__tiles');
-    const tileWidth = tilesContainer.querySelector('.x360-tile').offsetWidth + 8; // tile width + gap
+    const tilesContainer = channel.querySelector('.n64-channel__tiles');
+    const tileWidth = tilesContainer.querySelector('.n64-tile').offsetWidth + 8; // tile width + gap
     const scrollAmount = tileWidth * 3; // scroll 3 tiles at a time
     
     tilesContainer.scrollBy({
@@ -96,11 +96,11 @@
     }
     
     // Show/hide navigation arrows based on scroll width
-    const channels = document.querySelectorAll('.x360-channel');
+    const channels = document.querySelectorAll('.n64-channel');
     channels.forEach(channel => {
-      const tilesContainer = channel.querySelector('.x360-channel__tiles');
-      const prevNav = channel.querySelector('.x360-channel__nav--prev');
-      const nextNav = channel.querySelector('.x360-channel__nav--next');
+      const tilesContainer = channel.querySelector('.n64-channel__tiles');
+      const prevNav = channel.querySelector('.n64-channel__nav--prev');
+      const nextNav = channel.querySelector('.n64-channel__nav--next');
       
       // Initially hide prev button and check if next should be visible
       prevNav.classList.add('hidden');
@@ -128,7 +128,7 @@
 
 {% schema %}
 {
-  "name": "Xbox 360 Channel",
+  "name": "Nintendo 64 Channel",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -142,7 +142,7 @@
       "type": "checkbox",
       "id": "is_active",
       "label": "Active Channel",
-      "info": "Active channels have the green blade gradient background",
+      "info": "Active channels have the purple and gold gradient background",
       "default": false
     },
     {
@@ -233,7 +233,7 @@
   ],
   "presets": [
     {
-      "name": "Xbox 360 Channel"
+      "name": "Nintendo 64 Channel"
     }
   ]
 }

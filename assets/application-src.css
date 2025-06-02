@@ -10,85 +10,86 @@
     text-size-adjust: 100%;
   }
   body {
-    @apply bg-xbox-dark text-white;
+    @apply bg-n64-dark text-white;
   }
 }
 
 @layer components {
-  /* Blade shell gradient background */
-  .x360-blade-shell {
-    @apply bg-blade-gradient;
+  /* N64 shell gradient background */
+  .n64-shell {
+    @apply bg-n64-gradient;
   }
 
-  /* Channel styling */
-  .x360-channel {
+  /* Channel styling - N64 blocky style */
+  .n64-channel {
     @apply my-8 relative;
   }
-  .x360-channel__title {
-    @apply font-xbox text-2xl text-white font-bold px-4 mb-2;
+  .n64-channel__title {
+    @apply font-n64 text-xl text-n64-gold font-bold px-4 mb-2 uppercase;
   }
-  .x360-channel.is-active .x360-channel__title {
-    @apply bg-blade-gradient text-white p-2 rounded-r-full;
+  .n64-channel.is-active .n64-channel__title {
+    @apply bg-n64-gradient text-white p-2 shadow-lg;
   }
 
-  /* Navigation arrows */
-  .x360-nav-arrow {
-    @apply text-white bg-xbox-dark bg-opacity-75 p-2 rounded-full hover:bg-opacity-100;
+  /* Navigation arrows - N64 style */
+  .n64-nav-arrow {
+    @apply text-n64-gold bg-n64-purple bg-opacity-75 p-2 hover:bg-opacity-100;
   }
-  .x360-channel__nav {
-    @apply absolute top-1/2 transform -translate-y-1/2;
+  .n64-channel__nav {
+    @apply absolute top-1/2 transform -translate-y-1/2 z-10;
   }
-  .x360-channel__nav--prev {
+  .n64-channel__nav--prev {
     @apply left-0;
   }
-  .x360-channel__nav--next {
+  .n64-channel__nav--next {
     @apply right-0;
   }
 
   /* Tiles container */
-  .x360-channel__tiles {
-    @apply flex gap-4 overflow-x-auto scroll-pl-4 scrollbar-hide;
+  .n64-channel__tiles {
+    @apply flex gap-4 overflow-x-auto scroll-pl-4;
   }
 
-  /* Individual tile styling */
-  .x360-tile {
-    @apply relative group w-48 flex-shrink-0 bg-xbox-dark text-white rounded-lg overflow-hidden shadow-lg;
+  /* Individual tile styling - N64 blocky/pixel style */
+  .n64-tile {
+    @apply relative w-48 flex-shrink-0 bg-n64-purple text-white overflow-hidden shadow-lg border-4 border-n64-gold;
     animation: bladeSlide 0.5s ease-out;
   }
-  .x360-tile__img {
+  .n64-tile__img {
     @apply w-full h-40 object-cover;
   }
-  .x360-tile__placeholder {
-    @apply w-full h-40 flex items-center justify-center;
+  .n64-tile__placeholder {
+    @apply w-full h-40 flex items-center justify-center bg-n64-gradient;
   }
-  .x360-tile__overlay {
-    @apply absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100;
+  .n64-tile__overlay {
+    @apply absolute inset-0 bg-n64-dark bg-opacity-75 opacity-0 transition-opacity duration-200 group-hover:opacity-100;
   }
-  .x360-tile__content {
+  .n64-tile__content {
     @apply absolute bottom-0 left-0 p-4;
   }
-  .x360-tile__label {
-    @apply font-xbox text-lg;
+  .n64-tile__label {
+    @apply font-n64 text-base uppercase;
   }
-  .x360-tile__description {
-    @apply text-xs text-xbox-sub-green font-semibold;
+  .n64-tile__description {
+    @apply text-xs text-n64-gold font-n64;
   }
 
-  .x360-tile:hover {
+  .n64-tile:hover {
     animation: tileHover 0.2s ease-out forwards;
+    @apply border-white;
   }
 
-  /* Blade underline for header navigation */
+  /* N64 style underline for header navigation */
   .header__menu-item {
-    @apply font-xbox text-white px-4 py-2 relative group;
+    @apply font-n64 text-white px-4 py-2 relative uppercase text-sm;
   }
   .header__menu-item:hover,
   .header__menu-item:focus {
-    @apply text-xbox-sub-green;
+    @apply text-n64-gold;
   }
   .header__menu-item::after {
     content: '';
-    @apply absolute bottom-0 left-0 h-1 bg-blade-gradient w-0 transition-width duration-200;
+    @apply absolute bottom-0 left-0 h-1 bg-n64-gradient w-0 transition-all duration-200;
   }
   .header__menu-item:hover::after,
   .header__menu-item:focus::after,
@@ -97,11 +98,11 @@
   }
 }
 
-/* Hide scrollbars for x360 channel container */
-.x360-channel__tiles {
+/* Hide scrollbars for n64 channel container */
+.n64-channel__tiles {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.x360-channel__tiles::-webkit-scrollbar {
+.n64-channel__tiles::-webkit-scrollbar {
   display: none; /* WebKit browsers */
 } 
