@@ -5,42 +5,58 @@
 
 // Custom N64-style cursor
 document.addEventListener('DOMContentLoaded', function() {
-  if (window.matchMedia('(pointer: fine)').matches) {
-    // Only apply custom cursor on devices with precise pointing (mouse)
+  console.log('N64 Script Loaded - Setting up cursor');
+  
+  // Force immediate cursor creation regardless of device
+  createN64Cursor();
+  
+  function createN64Cursor() {
+    // Create cursor element
     const n64Cursor = document.createElement('div');
     n64Cursor.className = 'n64-cursor';
+    n64Cursor.id = 'n64-cursor';
     document.body.appendChild(n64Cursor);
     
-    // Add styles for the cursor
+    console.log('N64 Cursor element created');
+    
+    // Add styles with !important to override any conflicts
     const style = document.createElement('style');
     style.textContent = `
       .n64-cursor {
-        position: fixed;
-        width: 24px;
-        height: 24px;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFDF00' stroke='%236E00FF' stroke-width='2' d='M12,1 L12,23 M1,12 L23,12 M5,5 L19,19 M5,19 L19,5'%3E%3C/path%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition: transform 0.1s ease;
+        position: fixed !important;
+        width: 32px !important;
+        height: 32px !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFDF00' stroke='%236E00FF' stroke-width='2' d='M12,1 L12,23 M1,12 L23,12 M5,5 L19,19 M5,19 L19,5'%3E%3C/path%3E%3C/svg%3E") !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        pointer-events: none !important;
+        z-index: 999999 !important;
+        transform: translate(-50%, -50%) !important;
+        transition: transform 0.1s ease !important;
+        top: 0 !important;
+        left: 0 !important;
       }
       
-      * {
+      body, a, button, input, select {
         cursor: none !important;
       }
       
       a:hover ~ .n64-cursor,
       button:hover ~ .n64-cursor,
       .n64-tile:hover ~ .n64-cursor {
-        transform: translate(-50%, -50%) scale(1.5);
+        transform: translate(-50%, -50%) scale(1.5) !important;
       }
     `;
     document.head.appendChild(style);
     
-    // Follow mouse position
+    // Follow mouse position with direct style manipulation
     document.addEventListener('mousemove', (e) => {
-      n64Cursor.style.left = e.clientX + 'px';
-      n64Cursor.style.top = e.clientY + 'px';
+      requestAnimationFrame(() => {
+        if (n64Cursor) {
+          n64Cursor.style.left = e.clientX + 'px';
+          n64Cursor.style.top = e.clientY + 'px';
+        }
+      });
     });
     
     // Scale cursor on click
@@ -51,6 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('mouseup', () => {
       n64Cursor.style.transform = 'translate(-50%, -50%) scale(1)';
     });
+    
+    // Ensure cursor is visible by moving it to initial position
+    setTimeout(() => {
+      const event = new MouseEvent('mousemove', {
+        clientX: window.innerWidth / 2,
+        clientY: window.innerHeight / 2
+      });
+      document.dispatchEvent(event);
+      console.log('N64 Cursor positioned at center');
+    }, 500);
   }
 });
 
